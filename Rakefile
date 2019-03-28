@@ -4,6 +4,7 @@ Yast::Tasks.configuration do |conf|
   # lets ignore license check for now
   conf.skip_license_check << /.*/
 
+  conf.package_name = "ci-ruby-container"
   conf.obs_target = "containers"
 end
 
