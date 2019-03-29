@@ -81,6 +81,7 @@ RUN zypper --non-interactive install --no-recommends \
   && rm -rf /usr/share/doc/
 
 COPY yast-travis-ruby /usr/local/bin/
+RUN chmod a+x /usr/local/bin/yast-travis-ruby
 ENV LC_ALL=en_US.UTF-8
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
