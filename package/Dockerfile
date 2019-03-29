@@ -1,5 +1,5 @@
 
-#!BuildTag: yastruby
+#!BuildTag: yast-ruby
 
 FROM opensuse/tumbleweed
 
