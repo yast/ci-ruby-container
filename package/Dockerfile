@@ -6,6 +6,10 @@ FROM opensuse/tumbleweed
 # do not install the files marked as documentation (use "rpm --excludedocs")
 RUN sed -i -e "s/^.*rpm.install.excludedocs.*/rpm.install.excludedocs = yes/" /etc/zypp/zypp.conf
 
+# import the YaST OBS GPG key
+COPY YaST:Head.pub /usr/share/gpg-keys/
+RUN rpm --import /usr/share/gpg-keys/YaST:Head.pub
+
 # Prefer the packages from the YaST:Head repository
 # TODO -p 50 does not work, but should ne usless anyway, just like --refresh
 RUN zypper addrepo --refresh http://download.opensuse.org/repositories/YaST:/Head/openSUSE_Tumbleweed yast
@@ -75,10 +79,6 @@ RUN zypper --non-interactive install --no-recommends \
   && zypper clean --all \
   && rm -rf /usr/lib*/ruby/gems/*/cache/ \
   && rm -rf /usr/share/doc/
-
-# import the YaST OBS GPG key
-COPY YaST:Head.pub /usr/share/gpg-keys/
-RUN rpm --import /usr/share/gpg-keys/YaST:Head.pub
 
 COPY yast-travis-ruby /usr/local/bin/
 ENV LC_ALL=en_US.UTF-8
