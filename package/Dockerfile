@@ -11,7 +11,7 @@ COPY YaST:Head.pub /usr/share/gpg-keys/
 RUN rpm --import /usr/share/gpg-keys/YaST:Head.pub
 
 # Prefer the packages from the YaST:Head repository
-# TODO -p 50 does not work, but should ne usless anyway, just like --refresh
+# TODO -p 50 does not work, but should be usless anyway, just like --refresh
 RUN zypper addrepo --refresh http://download.opensuse.org/repositories/YaST:/Head/openSUSE_Tumbleweed yast
 
 RUN zypper --non-interactive install --no-recommends \
@@ -65,7 +65,6 @@ RUN zypper --non-interactive install --no-recommends \
   yast2-pkg-bindings \
   yast2-proxy \
   yast2-ruby-bindings \
-  yast2-samba-client \
   yast2-security \
   yast2-services-manager \
   yast2-slp \
