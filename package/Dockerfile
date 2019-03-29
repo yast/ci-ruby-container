@@ -77,7 +77,11 @@ RUN zypper --non-interactive install --no-recommends \
   yast2-ycp-ui-bindings \
   && zypper clean --all \
   && rm -rf /usr/lib*/ruby/gems/*/cache/ \
-  && rm -rf /usr/share/doc/
+  && rm -rf /usr/share/doc/ \
+  && rpm -e --nodeps kbd kbd-legacy \
+  && find /usr/lib/locale/* -maxdepth 1 | grep -v -E "(en_US|cs_CZ|es_ES|de_DE|C.utf8)" | xargs rm -rf \
+  && find /usr/share/locale -name "*.mo" -delete
+
 
 COPY yast-travis-ruby /usr/local/bin/
 RUN chmod a+x /usr/local/bin/yast-travis-ruby
