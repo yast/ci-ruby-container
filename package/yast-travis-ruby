@@ -186,9 +186,21 @@ function dump_settings() {
   echo
 }
 
+function set_rubocop_version() {
+  # here we need to set path exactly as update-alternatives needs, so find proper path from its output
+  RUBOCOP_PATH=$(update-alternatives --display rubocop | sed "/^[^[:space:]]\+$1"'/!d;s/^\([^[:space:]]\+\).*$/\1/')
+  update-alternatives --set rubocop "$RUBOCOP_PATH"
+}
+
 # run parallel rubocop if it is available,
 # otherwise fallback to standard rubocop call
 function run_rubocop() {
+  # set rubocop according to version that project use
+  if grep 'rubocop-0.71.0' .rubocop.yml; then
+    set_rubocop_version 0.71.0
+  else
+    set_rubocop_version 0.41.2
+  fi
   if rake -T | grep -q "^rake check:rubocop"; then
     rake check:rubocop
   else

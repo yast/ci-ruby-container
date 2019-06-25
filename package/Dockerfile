@@ -35,7 +35,8 @@ RUN zypper --non-interactive install --no-recommends \
   "rubygem(parallel_tests)" \
   "rubygem(raspell)" \
   "rubygem(rspec)" \
-  "rubygem(rubocop)" \
+  "rubygem(ruby:2.6.0:rubocop:0.41.2)" \
+  "rubygem(ruby:2.6.0:rubocop:0.71.0)" \
   "rubygem(simplecov)" \
   "rubygem(simpleidn)" \
   "rubygem(suse-connect)" \
