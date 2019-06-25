@@ -187,8 +187,9 @@ function dump_settings() {
 }
 
 function set_rubocop_version() {
-  RUBOCOP_PATH=`update-alternatives --display rubocop | sed "/^[^[:space:]]\+$1"'/!d;s/^\([^[:space:]]\+\).*$/\1/'`
-  update-alternatives --set rubocop $RUBOCOP_PATH
+  # here we need to set path exactly as update-alternatives needs, so find proper path from its output
+  RUBOCOP_PATH=$(update-alternatives --display rubocop | sed "/^[^[:space:]]\+$1"'/!d;s/^\([^[:space:]]\+\).*$/\1/')
+  update-alternatives --set rubocop "$RUBOCOP_PATH"
 }
 
 # run parallel rubocop if it is available,
