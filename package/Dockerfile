@@ -90,8 +90,3 @@ RUN chmod a+x /usr/local/bin/yast-travis-ruby
 ENV LC_ALL=en_US.UTF-8
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
-
-# just some smoke tests, make sure rake and YaST work properly,
-# ensure there is no leftover in the working directory
-RUN rake -r yast/rake -V && TERM=xterm yast2 proxy summary && \
-  rm -rf /var/log/YaST2/y2log && rm -rf /usr/src/app/*
