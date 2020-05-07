@@ -47,6 +47,7 @@ RUN zypper --non-interactive install --no-recommends \
   openSUSE-release-ftp \
   patterns-rpm-macros \
   ShellCheck \
+  trang \
   yast2 \
   yast2-add-on \
   yast2-bootloader \
