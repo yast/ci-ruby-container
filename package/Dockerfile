@@ -55,7 +55,6 @@ RUN zypper --non-interactive install --no-recommends \
   yast2-country \
   yast2-devtools \
   yast2-hardware-detection \
-  yast2-inetd \
   yast2-installation \
   yast2-installation-control \
   yast2-ldap \
