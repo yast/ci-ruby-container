@@ -38,6 +38,7 @@ RUN zypper --non-interactive install --no-recommends \
   "rubygem(ruby:2.7.0:rubocop:0.41.2)" \
   "rubygem(ruby:2.7.0:rubocop:0.71.0)" \
   "rubygem(ruby:2.7.0:simplecov)" \
+  "rubygem(ruby:2.7.0:simplecov-lcov)" \
   "rubygem(ruby:2.7.0:simpleidn)" \
   "rubygem(ruby:2.7.0:suse-connect)" \
   "rubygem(ruby:2.7.0:yard)" \
