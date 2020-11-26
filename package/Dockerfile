@@ -85,8 +85,12 @@ RUN zypper --non-interactive install --no-recommends \
   && find /usr/share/locale -name "*.mo" -delete
 
 
-COPY yast-travis-ruby /usr/local/bin/
-RUN chmod a+x /usr/local/bin/yast-travis-ruby
+COPY yast-ci-ruby /usr/local/bin/
+RUN chmod a+x /usr/local/bin/yast-ci-ruby
+
+# just a backward compatible symlink, should be removed in the future...
+RUN ln -s yast-ci-ruby /usr/local/bin/yast-travis-ruby
+
 ENV LC_ALL=en_US.UTF-8
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
