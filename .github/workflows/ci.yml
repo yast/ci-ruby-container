@@ -1,0 +1,35 @@
+
+# See https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions
+
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  Build:
+    runs-on: ubuntu-latest
+
+    steps:
+
+    - name: Git Checkout
+      uses: actions/checkout@v2
+
+    # the OBS build actually uses the image from YaST:Head, patch the config
+    # to use the same base image also in the GitHub Action
+    - name: Patch the Dockerfile
+      run: sed -i 's@^FROM\\b.*$@FROM registry.opensuse.org/yast/head/images/opensuse/tumbleweed:latest@' package/Dockerfile
+
+    - name: Build the Docker Image
+      run: docker build -t yast-ruby package
+
+    # check that the YaST rake tasks can be loaded
+    - name: Smoke Test - Rake
+      run: docker run --rm yast-ruby rake -r yast/rake -V
+
+    # check that YaST can be started
+    - name: Smoke Test - YaST
+      run: docker run --rm -e TERM=xterm yast-ruby yast2 proxy summary
+
+    # check the CI script
+    - name: ShellCheck
+      run: docker run --rm yast-ruby shellcheck /usr/local/bin/yast-ci-ruby
