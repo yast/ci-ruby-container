@@ -3,7 +3,7 @@
 [![CI](https://github.com/yast/ci-ruby-container/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/yast/ci-ruby-container/actions/workflows/ci.yml)
 
 This git repository contains the configuration used to build the docker
-image used for [TravisCI](https://travis-ci.org/).
+image used in CI tests.
 The resulting docker image is available at https://registry.opensuse.org/.
 
 ## Automatic Rebuilds
@@ -30,7 +30,7 @@ in Ruby. It is possible to install additional packagers if needed, see the
 
 ## Using the Image in the Other Projects
 
-The image contains the `yast-travis-ruby` script which runs all the checks and tests.
+The image contains the `yast-ci-ruby` script which runs all the checks and tests.
 
 The workflow is:
 
@@ -38,48 +38,44 @@ The workflow is:
 - If the code needs additional packages install them using the `zypper install`
   command from the local `Dockerfile`. If the package can be used by more modules
   you can add it into the base Docker image here.
-- Run the `yast-travis-ruby` script. (Optionally you can use the `-x` and `-o`
+- Run the `yast-ci-ruby` script. (Optionally you can use the `-x` and `-o`
   options to split the work into several smaller tasks and run them in parallel,
   see the [yast2-storage-ng example](
-  https://github.com/yast/yast-storage-ng/blob/master/.travis.yml).)
+  https://github.com/yast/yast-storage-ng/blob/fbbaf6e96b5ee486500def361e14b133d458217a/.github/workflows/ci.yml).)
 
 ## Examples
 
-### `Dockerfile` example
+### GitHub Action Example
 
-```Dockerfile
-FROM registry.opensuse.org/yast/head/containers/yast-ruby
-
-# optionally install additional packages if needed:
-# RUN zypper --non-interactive install --no-recommends \
-#  libxml2-devel \
-#  yast2-core-devel
-
-# copy the sources into the image
-COPY . /usr/src/app
-```
-
-### `.travis.yml` Example
+Save as `.github/workflows/ci.yml` file in your Git repository:
 
 ```yaml
-sudo: required
-language: bash
-services:
-  - docker
+# See https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions
 
-before_install:
-  - docker build -t yast-foo-image .
-  # list the installed packages (just for easier debugging)
-  - docker run --rm -it yast-foo-image rpm -qa | sort
+name: CI
 
-script:
-  # the "yast-travis-ruby" script is included in the base yast-ruby image
-  # see https://github.com/yast/ci-ruby-container/blob/master/package/yast-travis-ruby
-  - docker run -it --rm -e TRAVIS=1 -e TRAVIS_JOB_ID="$TRAVIS_JOB_ID" yast-foo-image yast-travis-ruby
+on: [push, pull_request]
+
+jobs:
+  Package:
+    runs-on: ubuntu-latest
+    container: registry.opensuse.org/yast/head/containers/yast-ruby:latest
+
+    steps:
+
+    - name: Git Checkout
+      uses: actions/checkout@v2
+
+    # optional, remove if not needed
+    - name: Prepare System
+      run: |
+        zypper --non-interactive in --no-recommends \
+          needed-package1 \
+          needed-package2
+
+    - name: Package Build
+      run:  yast-ci-ruby
 ```
-
-(Replace `foo` with your package name to avoid collisions with the other packages
-when running the same commands locally.)
 
 
 ## Building the Image Locally

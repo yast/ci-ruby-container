@@ -1,7 +1,6 @@
 #! /bin/bash
 
-# This is a CI build script for running inside the Travis builds.
-# It's designed for the YaST packages written in Ruby.
+# This is a CI build script, it is designed for the YaST packages written in Ruby.
 
 # exit on error immediately
 set -e
