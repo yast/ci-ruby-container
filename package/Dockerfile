@@ -38,6 +38,7 @@ RUN zypper --non-interactive install --no-recommends \
   "rubygem(ruby:3.0.0:rspec)" \
   "rubygem(ruby:3.0.0:rubocop:0.41.2)" \
   "rubygem(ruby:3.0.0:rubocop:0.71.0)" \
+  "rubygem(ruby:3.0.0:rubocop:1.24.1)" \
   "rubygem(ruby:3.0.0:simplecov)" \
   "rubygem(ruby:3.0.0:simplecov-lcov)" \
   "rubygem(ruby:3.0.0:simpleidn)" \
