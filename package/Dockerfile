@@ -42,7 +42,6 @@ RUN zypper --non-interactive install --no-recommends \
   "rubygem(ruby:3.0.0:simplecov)" \
   "rubygem(ruby:3.0.0:simplecov-lcov)" \
   "rubygem(ruby:3.0.0:simpleidn)" \
-  "rubygem(ruby:3.0.0:ffi)" \
   "rubygem(ruby:3.0.0:yard)" \
   "rubygem(ruby:3.0.0:yast-rake)" \
   build \
