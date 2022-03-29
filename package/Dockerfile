@@ -18,7 +18,6 @@ RUN zypper addrepo --refresh http://download.opensuse.org/repositories/YaST:/Hea
 
 RUN zypper --non-interactive install --no-recommends \
   brp-check-suse \
-  brp-extract-appdata \
   aspell-en \
   fdupes \
   git \
