@@ -22,6 +22,7 @@ RUN zypper --non-interactive install --no-recommends \
   fdupes \
   git \
   grep \
+  glibc-locale \
   rpm-build \
   update-desktop-files \
   which \
