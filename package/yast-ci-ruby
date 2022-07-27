@@ -295,7 +295,7 @@ fi
 # https://github.blog/2022-04-18-highlights-from-git-2-36/
 # https://github.blog/2022-04-12-git-security-vulnerability-announced/
 if [ "$UID" == "0" ]; then
-  chown -c 0 .
+  chown -R -c 0 .
 fi
 
 # run package with all its checks, but be silent as possible. STDOUT is sent to dev null due to output of tar command
