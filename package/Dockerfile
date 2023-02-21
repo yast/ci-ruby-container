@@ -86,6 +86,11 @@ RUN zypper --non-interactive install --no-recommends \
   && find /usr/lib/locale/* -maxdepth 1 | grep -v -E "(en_US|cs_CZ|es_ES|de_DE|C.utf8)" | xargs rm -rf \
   && find /usr/share/locale -name "*.mo" -delete
 
+# fail when there are multiple Ruby interpreters installed
+RUN if [ `rpm -q --whatprovides "ruby(abi)" | wc -l` -gt 1 ]; then \
+  rpm -q --whatprovides "ruby(abi)"; \
+  echo "Multiple Rubies detected, most likely the system Ruby version has been upgraded."; \
+  echo "Update the versions of the included Ruby gems."; exit 1; fi
 
 COPY yast-ci-ruby /usr/local/bin/
 RUN chmod a+x /usr/local/bin/yast-ci-ruby
