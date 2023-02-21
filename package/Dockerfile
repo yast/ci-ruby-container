@@ -28,22 +28,22 @@ RUN zypper --non-interactive install --no-recommends \
   which \
   libxml2-tools \
   libxslt-tools \
-  "rubygem(ruby:3.1.0:abstract_method)" \
-  "rubygem(ruby:3.1.0:cfa)" \
-  "rubygem(ruby:3.1.0:cheetah)" \
-  "rubygem(ruby:3.1.0:gettext)" \
-  "rubygem(ruby:3.1.0:parallel)" \
-  "rubygem(ruby:3.1.0:parallel_tests)" \
-  "rubygem(ruby:3.1.0:raspell)" \
-  "rubygem(ruby:3.1.0:rspec)" \
-  "rubygem(ruby:3.1.0:rubocop:0.41.2)" \
-  "rubygem(ruby:3.1.0:rubocop:0.71.0)" \
-  "rubygem(ruby:3.1.0:rubocop:1.24.1)" \
-  "rubygem(ruby:3.1.0:simplecov)" \
-  "rubygem(ruby:3.1.0:simplecov-lcov)" \
-  "rubygem(ruby:3.1.0:simpleidn)" \
-  "rubygem(ruby:3.1.0:yard)" \
-  "rubygem(ruby:3.1.0:yast-rake)" \
+  "rubygem(ruby:3.2.0:abstract_method)" \
+  "rubygem(ruby:3.2.0:cfa)" \
+  "rubygem(ruby:3.2.0:cheetah)" \
+  "rubygem(ruby:3.2.0:gettext)" \
+  "rubygem(ruby:3.2.0:parallel)" \
+  "rubygem(ruby:3.2.0:parallel_tests)" \
+  "rubygem(ruby:3.2.0:raspell)" \
+  "rubygem(ruby:3.2.0:rspec)" \
+  "rubygem(ruby:3.2.0:rubocop:0.41.2)" \
+  "rubygem(ruby:3.2.0:rubocop:0.71.0)" \
+  "rubygem(ruby:3.2.0:rubocop:1.24.1)" \
+  "rubygem(ruby:3.2.0:simplecov)" \
+  "rubygem(ruby:3.2.0:simplecov-lcov)" \
+  "rubygem(ruby:3.2.0:simpleidn)" \
+  "rubygem(ruby:3.2.0:yard)" \
+  "rubygem(ruby:3.2.0:yast-rake)" \
   build \
   obs-service-source_validator \
   openSUSE-release-ftp \
