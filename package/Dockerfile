@@ -87,6 +87,8 @@ RUN zypper --non-interactive install --no-recommends \
   && find /usr/share/locale -name "*.mo" -delete
 
 # fail when there are multiple Ruby interpreters installed
+# Because it means one part of YaST wanted a different version than the other
+# and requires/imports will fail on the version mismatch.
 RUN if [ `rpm -q --whatprovides "ruby(abi)" | wc -l` -gt 1 ]; then \
   rpm -q --whatprovides "ruby(abi)"; \
   echo "Multiple Rubies detected, most likely the system Ruby version has been upgraded."; \
