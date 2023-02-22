@@ -28,22 +28,22 @@ RUN zypper --non-interactive install --no-recommends \
   which \
   libxml2-tools \
   libxslt-tools \
-  "rubygem(ruby:3.1.0:abstract_method)" \
-  "rubygem(ruby:3.1.0:cfa)" \
-  "rubygem(ruby:3.1.0:cheetah)" \
-  "rubygem(ruby:3.1.0:gettext)" \
-  "rubygem(ruby:3.1.0:parallel)" \
-  "rubygem(ruby:3.1.0:parallel_tests)" \
-  "rubygem(ruby:3.1.0:raspell)" \
-  "rubygem(ruby:3.1.0:rspec)" \
-  "rubygem(ruby:3.1.0:rubocop:0.41.2)" \
-  "rubygem(ruby:3.1.0:rubocop:0.71.0)" \
-  "rubygem(ruby:3.1.0:rubocop:1.24.1)" \
-  "rubygem(ruby:3.1.0:simplecov)" \
-  "rubygem(ruby:3.1.0:simplecov-lcov)" \
-  "rubygem(ruby:3.1.0:simpleidn)" \
-  "rubygem(ruby:3.1.0:yard)" \
-  "rubygem(ruby:3.1.0:yast-rake)" \
+  "rubygem(ruby:3.2.0:abstract_method)" \
+  "rubygem(ruby:3.2.0:cfa)" \
+  "rubygem(ruby:3.2.0:cheetah)" \
+  "rubygem(ruby:3.2.0:gettext)" \
+  "rubygem(ruby:3.2.0:parallel)" \
+  "rubygem(ruby:3.2.0:parallel_tests)" \
+  "rubygem(ruby:3.2.0:raspell)" \
+  "rubygem(ruby:3.2.0:rspec)" \
+  "rubygem(ruby:3.2.0:rubocop:0.41.2)" \
+  "rubygem(ruby:3.2.0:rubocop:0.71.0)" \
+  "rubygem(ruby:3.2.0:rubocop:1.24.1)" \
+  "rubygem(ruby:3.2.0:simplecov)" \
+  "rubygem(ruby:3.2.0:simplecov-lcov)" \
+  "rubygem(ruby:3.2.0:simpleidn)" \
+  "rubygem(ruby:3.2.0:yard)" \
+  "rubygem(ruby:3.2.0:yast-rake)" \
   build \
   obs-service-source_validator \
   openSUSE-release-ftp \
@@ -86,6 +86,13 @@ RUN zypper --non-interactive install --no-recommends \
   && find /usr/lib/locale/* -maxdepth 1 | grep -v -E "(en_US|cs_CZ|es_ES|de_DE|C.utf8)" | xargs rm -rf \
   && find /usr/share/locale -name "*.mo" -delete
 
+# fail when there are multiple Ruby interpreters installed
+# Because it means one part of YaST wanted a different version than the other
+# and requires/imports will fail on the version mismatch.
+RUN if [ `rpm -q --whatprovides "ruby(abi)" | wc -l` -gt 1 ]; then \
+  rpm -q --whatprovides "ruby(abi)"; \
+  echo "Multiple Rubies detected, most likely the system Ruby version has been upgraded."; \
+  echo "Update the versions of the included Ruby gems."; exit 1; fi
 
 COPY yast-ci-ruby /usr/local/bin/
 RUN chmod a+x /usr/local/bin/yast-ci-ruby
