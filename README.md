@@ -1,6 +1,7 @@
 # The YaST Ruby Testing Image
 
 [![CI](https://github.com/yast/ci-ruby-container/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/yast/ci-ruby-container/actions/workflows/ci.yml)
+[![OBS](https://github.com/yast/ci-ruby-container/actions/workflows/submit.yml/badge.svg)](https://github.com/yast/ci-ruby-container/actions/workflows/submit.yml)
 
 This git repository contains the configuration used to build the docker
 image used in CI tests.
@@ -9,9 +10,9 @@ The resulting docker image is available at https://registry.opensuse.org/.
 ## Automatic Rebuilds
 
 - The image is rebuilt whenever a commit it pushed to the `master` branch.
-- The [yast-ci-ruby-container-master](
-  https://ci.opensuse.org/view/Yast/job/yast-ci-ruby-container-master/)
-  Jenkins job copies the configuration to the OBS project
+- The [submit.yml](./.github/workflows/submit.yml)
+  GitHub Action commits the configuration to the [YaST:Head/ci-ruby-container](
+  https://build.opensuse.org/package/show/YaST:Head/ci-ruby-container)
 - The OBS tracks the dependencies and rebuilds the image if any dependant package
   is updated.
 
@@ -39,9 +40,7 @@ The workflow is:
   command from the local `Dockerfile`. If the package can be used by more modules
   you can add it into the base Docker image here.
 - Run the `yast-ci-ruby` script. (Optionally you can use the `-x` and `-o`
-  options to split the work into several smaller tasks and run them in parallel,
-  see the [yast2-storage-ng example](
-  https://github.com/yast/yast-storage-ng/blob/fbbaf6e96b5ee486500def361e14b133d458217a/.github/workflows/ci.yml).)
+  options to split the work into several smaller tasks and run them in parallel.)
 
 ## Examples
 
@@ -64,7 +63,7 @@ jobs:
     steps:
 
     - name: Git Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
 
     # optional, remove if not needed
     - name: Prepare System
