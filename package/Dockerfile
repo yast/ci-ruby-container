@@ -34,7 +34,6 @@ RUN zypper --non-interactive install --no-recommends \
   "rubygem(ruby:3.4.0:gettext)" \
   "rubygem(ruby:3.4.0:parallel)" \
   "rubygem(ruby:3.4.0:parallel_tests)" \
-  "rubygem(ruby:3.4.0:raspell)" \
   "rubygem(ruby:3.4.0:rspec)" \
   "rubygem(ruby:3.4.0:rubocop:0.41.2)" \
   "rubygem(ruby:3.4.0:rubocop:0.71.0)" \
