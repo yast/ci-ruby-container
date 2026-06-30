@@ -58,7 +58,7 @@ function set_defaults() {
     RUN_RUBOCOP=1
   else
     RUN_RUBOCOP=0
-  fi;
+  fi
 
   if [ -e .spell.yml ]; then
     RUN_CHECK_SPELLING=1
@@ -126,6 +126,7 @@ function exclude() {
       echo "ERROR: Unknown step: '$1'"
       echo "Known steps: $ALL_STEPS"
       exit 1
+      ;;
   esac
   EXCLUDE_USED=1
 }
@@ -168,6 +169,7 @@ function run_only() {
       echo "ERROR: Unknown step: '$1'"
       echo "Known steps: $ALL_STEPS"
       exit 1
+      ;;
   esac
   RUN_ONLY_USED=1
 }
@@ -188,7 +190,17 @@ function dump_settings() {
 function set_rubocop_version() {
   # here we need to set path exactly as update-alternatives needs, so find proper path from its output
   RUBOCOP_PATH=$(update-alternatives --display rubocop | sed "/^[^[:space:]]\+$1"'/!d;s/^\([^[:space:]]\+\).*$/\1/')
-  update-alternatives --set rubocop "$RUBOCOP_PATH"
+  if [ -n "$RUBOCOP_PATH" ]; then
+    update-alternatives --set rubocop "$RUBOCOP_PATH"
+  else
+    RUBOCOP_PATH=$(alts -l rubocop | grep "Target:" | sed "s/^.*Target:\s*\(\S.*\)$/\1/" | grep "$1")
+    if [ -n "$RUBOCOP_PATH" ]; then
+      alts -s -n rubocop "$RUBOCOP_PATH"
+    else
+      echo "ERROR: Cannot set the default Rubocop version to $1"
+      exit 1
+    fi
+  fi
 }
 
 # run parallel rubocop if it is available,
@@ -212,11 +224,11 @@ function check_perl() {
   # Perl allows checking the syntax only for one file at once, we need to use -n1
   # xargs option, to speed it up run the checks in parallel (-P option).
   # If you need to specify an additional search path use the PERL5LIB environment variable.
-  find . -type f -name '*.p[ml]' -print0 \
-    | xargs -0 -P"$(nproc)" -n1 perl -I src/modules -I /usr/share/YaST2/modules -w -c
+  find . -type f -name '*.p[ml]' -print0 |
+    xargs -0 -P"$(nproc)" -n1 perl -I src/modules -I /usr/share/YaST2/modules -w -c
 }
 
-# initializa the defaults and parse the command line options
+# initialize the defaults and parse the command line options
 
 set_defaults
 
