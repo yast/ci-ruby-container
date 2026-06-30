@@ -189,11 +189,11 @@ function dump_settings() {
 
 function set_rubocop_version() {
   # here we need to set path exactly as update-alternatives needs, so find proper path from its output
-  RUBOCOP_PATH=$(update-alternatives --display rubocop | sed "/^[^[:space:]]\+$1"'/!d;s/^\([^[:space:]]\+\).*$/\1/')
+  RUBOCOP_PATH=$(update-alternatives --display rubocop 2> /dev/null | sed "/^[^[:space:]]\+$1"'/!d;s/^\([^[:space:]]\+\).*$/\1/' || true)
   if [ -n "$RUBOCOP_PATH" ]; then
     update-alternatives --set rubocop "$RUBOCOP_PATH"
   else
-    RUBOCOP_PATH=$(alts -l rubocop | grep "Target:" | sed "s/^.*Target:\s*\(\S.*\)$/\1/" | grep "$1")
+    RUBOCOP_PATH=$(alts -l rubocop | grep "Target:" | sed "s/^.*Target:\s*\(\S.*\)$/\1/" | grep "$1" || true)
     if [ -n "$RUBOCOP_PATH" ]; then
       alts -s -n rubocop "$RUBOCOP_PATH"
     else
